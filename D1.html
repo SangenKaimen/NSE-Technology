@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>สั่งซื้อสินค้า</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 4px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #1e293b;
+      color: #fff;
+    }
+    textarea {
+      min-height: 100px;
+    }
+    .btn {
+      display: inline-block;
+      background: #38bdf8;
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-weight: bold;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+    .back {
+      display: inline-block;
+      margin-top: 20px;
+      color: #94a3b8;
+      text-decoration: none;
+    }
+    .back:hover {
+      color: #fff;
+    }
+    #status {
+      margin-top: 10px;
+      color: #34d399;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>สั่งซื้อ <span id="productName">สินค้า</span></h1>
+    
+    <form id="orderForm">
+      <input type="hidden" id="product" name="product">
+
+      <label for="name">ชื่อผู้สั่ง</label>
+      <input type="text" id="name" name="name" placeholder="เช่น สมชาย ใจดี" required>
+
+      <label for="phone">เบอร์โทรศัพท์</label>
+      <input type="tel" id="phone" name="phone" placeholder="08xxxxxxxx" required>
+
+      <label for="address">ที่อยู่จัดส่ง</label>
+      <textarea id="address" name="address" placeholder="ใส่ที่อยู่สำหรับจัดส่งสินค้า" required></textarea>
+
+      <label for="note">หมายเหตุ (ถ้ามี)</label>
+      <textarea id="note" name="note" placeholder="บอกเพิ่มเติม เช่น เวลาจัดส่งที่สะดวก"></textarea>
+
+      <button class="btn" type="submit">ส่งคำสั่งซื้อ</button>
+    </form>
+
+    <div id="status"></div>
+
+    <a href="index.html" class="back">← กลับหน้าแรก</a>
+  </div>
+
+  <script>
+    // ดึงชื่อสินค้าจาก query string
+    const params = new URLSearchParams(window.location.search);
+    const product = params.get("product") || "ไม่ระบุ";
+    document.getElementById("productName").textContent = product;
+    document.getElementById("product").value = product;
+
+    // ส่งฟอร์ม (จำลอง)
+    document.getElementById("orderForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+
+      // แสดงข้อความยืนยัน (คุณสามารถแทนที่ด้วยการส่งจริง)
+      document.getElementById("status").textContent = "✅ ส่งคำสั่งซื้อเรียบร้อยแล้ว ขอบคุณค่ะ!";
+
+      // ล้างฟอร์ม
+      this.reset();
+    });
+  </script>
+</body>
+</html>
